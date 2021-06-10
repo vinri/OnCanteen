@@ -80,13 +80,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-
             android:id="@+id/canteen_list"
             android:layout_below="@+id/topLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:layout_above="@+id/navBar"/>
+            android:layout_above="@+id/navBar"
+            android:layout_centerHorizontal="true"/>
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/navBar"
         android:layout_width="match_parent"

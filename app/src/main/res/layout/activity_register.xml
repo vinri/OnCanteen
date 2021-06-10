@@ -30,9 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="REGISTER"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#7E57C2"
+                android:textSize="24sp"
+                android:textColor="@color/colorAccent"
                 android:layout_marginBottom="5dp"
                 android:id="@+id/test"/>
             <EditText
@@ -76,27 +75,37 @@
                 android:id="@+id/registerButton"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:backgroundTint="@color/colorAccent"
-                android:text="CREATE ACCOUNT"
-                app:cornerRadius="20dp" />
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account ?"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"
-                />
-            <TextView
+                android:backgroundTint="@color/colorAccent"
+                android:text="SIGN UP"
+                android:layout_gravity="center_horizontal"
+                app:cornerRadius="20dp" />
+            <LinearLayout
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LOGIN"
-                android:layout_marginBottom="10dp"
-                android:textAlignment="center"
-                android:id="@+id/backToLogin"
-                android:textColor="#7E57C2"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Already have an account ? "
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign In"
+                    android:textAlignment="center"
+                    android:id="@+id/backToLogin"
+                    android:textColor="@color/colorAccent"
+
+                    />
+
+
+            </LinearLayout>
+
 
 
 

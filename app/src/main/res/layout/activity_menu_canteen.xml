@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuCanteen">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DASHBOARD"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/dash"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/canteen_list"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/dash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/toProfile"
+        android:layout_marginBottom="32dp"
+        app:cornerRadius="20dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Profile"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+
+
+
+</RelativeLayout>

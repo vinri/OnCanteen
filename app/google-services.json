@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "600090791912",
+    "project_id": "campuscanteen-1d756",
+    "storage_bucket": "campuscanteen-1d756.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600090791912:android:3d1ed717ce47330dff9e5d",
+        "android_client_info": {
+          "package_name": "com.example.campuscanteen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600090791912-13n7bdl6s8co12ijis75rn6vuiggmifh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Is0OkK64evyOXG3zb2W-P1fmp3V-g3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600090791912-13n7bdl6s8co12ijis75rn6vuiggmifh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

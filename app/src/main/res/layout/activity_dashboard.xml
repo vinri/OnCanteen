@@ -1,104 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_bg"
     tools:context=".dashboard">
+
     <LinearLayout
+        android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/bg_rounded"
         android:backgroundTint="@color/colorAccent"
-        android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/logo"
-        >
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/ic_group"/>
+            android:src="@drawable/ic_group" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ONCANTEEN"
             android:layout_marginLeft="8dp"
-            android:textStyle="bold"
+            android:text="ONCANTEEN"
             android:textColor="@color/white"
-            android:textSize="24dp"/>
+            android:textSize="24dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
     <LinearLayout
-        android:layout_margin="32dp"
+        android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/topLayout"
         android:layout_below="@+id/logo"
-        >
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/canteen_list"
+        app:layout_constraintEnd_toStartOf="@+id/logo"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toBottomOf="@id/logo">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/dash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello, "
 
+                android:text="Hello, "
                 android:textColor="@color/grey"
-                android:textSize="24sp"
-                android:id="@+id/dash"
-                />
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="User"
-                android:textSize="24dp"
                 android:textColor="@color/grey"
-                />
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+
         <TextView
+            android:id="@+id/caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="What do you want to order today?"
             android:textColor="@color/light_grey"
-            android:textSize="16sp"
-            android:id="@+id/caption"
-            />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:id="@+id/canteen_list"
-            android:layout_below="@+id/topLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/navBar"
-            android:layout_centerHorizontal="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/canteen_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/navBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topLayout" />
+
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/navBar"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:layout_gravity="bottom"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"
+        android:background="@color/light_bg"
         app:cnb_menuResource="@menu/bottom_menu"
-
-        />
-
-
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

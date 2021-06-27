@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -35,13 +38,16 @@ public class profile extends AppCompatActivity {
     TextView username,fullname,email,phone;
     ImageView profileImage;
     Button logout;
-    String userId;
+    private FloatingActionButton editImageBtn;
+    String userId, MyUri="";
+    CircleImageView circleImageView;
 
     ChipNavigationBar navigationBar;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore fstore;
     StorageReference storageReference;
+    private StorageTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +59,13 @@ public class profile extends AppCompatActivity {
         email = findViewById(R.id.profileEmail);
         phone = findViewById(R.id.profilePhone);
         logout = findViewById(R.id.logout);
-        profileImage = findViewById(R.id.imgUser);
+        profileImage = findViewById(R.id.profilePic);
         navigationBar = findViewById(R.id.navBar);
+        editImageBtn = findViewById(R.id.changeImage);
 
         firebaseAuth= FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
-        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference().child("user/"+userId);
 
         userId = firebaseAuth.getCurrentUser().getUid();
         if (savedInstanceState==null){
@@ -98,11 +105,10 @@ public class profile extends AppCompatActivity {
 
         });
 
-        profileImage.setOnClickListener(new View.OnClickListener() {
+        editImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openGalleryIntent =  new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(openGalleryIntent, 1000);
+                
             }
         });
 

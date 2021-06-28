@@ -37,7 +37,8 @@ public class CanteenAdapter extends RecyclerView.Adapter<CanteenAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CanteenAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_canteen, parent, false));
+        return new CanteenAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_canteen, parent, false));
     }
 
     @Override
@@ -48,9 +49,8 @@ public class CanteenAdapter extends RecyclerView.Adapter<CanteenAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MenuCanteen.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("key", itemList);
-                intent.putExtras(bundle);
+                intent.putExtra("canteenId",itemList.getCanteenId());
+                intent.putExtra("CanteenName",itemList.getCanteenName());
                 v.getContext().startActivity(intent);
             }
         });

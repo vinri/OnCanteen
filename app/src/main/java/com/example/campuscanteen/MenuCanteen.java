@@ -1,6 +1,8 @@
 package com.example.campuscanteen;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.DocumentReference;
@@ -8,6 +10,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -21,11 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MenuCanteen extends AppCompatActivity {
 
+    private static final String TAG = "TAG";
     private RecyclerView recyclerView;
     private AdapterMenuCustomer adapter;
     private CanteenAdapter canteenAdapter;
     private TextView headerName;
-    private String getId;
 
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -41,15 +44,13 @@ public class MenuCanteen extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         headerName = findViewById(R.id.dash);
 
-        DocumentReference Canteenreference = db.collection("canteen").document();
-        Canteenreference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                headerName.setText(value.getString("CanteenName"));
-            }
-        });
+        Intent data = getIntent();
+        String name = data.getStringExtra("CanteenName");
+        String id = data.getStringExtra("canteenId");
+        Log.d(TAG, "onCreate: "+name+"  "+id);
+        headerName.setText(name);
 
-        db.collection("canteen").document().collection("menu")
+        db.collection("canteen").whereEqualTo("canteenId","vczx2t")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(AuthResult authResult) {
                         login();
 
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -101,13 +104,27 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (level){
                         case "customer":
-                            startActivity(new Intent(getApplicationContext(), dashboard.class));
-                            finish();
+                            progressDialog();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(getApplicationContext(), dashboard.class));
+                                    finish();
+                                }
+                            },3000);
+
                             break;
 
                         case "seller":
-                            startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
-                            finish();
+                            progressDialog();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
+                                    finish();
+                                }
+                            },2000);
+
                             break;
 
                     }
@@ -116,8 +133,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
+
+    private void progressDialog() {
+
+
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setTitle("Login");
+        progressDialog.setMessage("Please Wait, While we are setting your data ");
+        progressDialog.show();
+    }
+
 }

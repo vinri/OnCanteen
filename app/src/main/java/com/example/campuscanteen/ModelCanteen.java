@@ -2,14 +2,14 @@ package com.example.campuscanteen;
 
 import java.io.Serializable;
 
-public class CanteenModel implements Serializable {
+public class ModelCanteen implements Serializable {
 
     private String CanteenId = "", CanteenName = "";
 
-    public CanteenModel() {
+    public ModelCanteen() {
     }
 
-    public CanteenModel(String canteenId, String canteenName) {
+    public ModelCanteen(String canteenId, String canteenName) {
         CanteenId = canteenId;
         CanteenName = canteenName;
     }

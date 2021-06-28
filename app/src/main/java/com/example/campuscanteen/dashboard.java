@@ -1,37 +1,23 @@
 package com.example.campuscanteen;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -49,7 +35,7 @@ public class dashboard extends AppCompatActivity {
     private TextView userName;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private CanteenAdapter adapter;
+    private AdapterCanteen adapter;
 
     Button button;
     ChipNavigationBar navigationBar;
@@ -111,14 +97,14 @@ public class dashboard extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 Log.d(TAG, "onEvent: " );
-                List<CanteenModel> list = new ArrayList<>();
+                List<ModelCanteen> list = new ArrayList<>();
                 if(value != null) {
                     for(QueryDocumentSnapshot item : value) {
-                        list.add(new CanteenModel(item.getString("CanteenId"), item.getString("CanteenName")));
+                        list.add(new ModelCanteen(item.getString("CanteenId"), item.getString("CanteenName")));
                     }
                 }
 
-                adapter = new CanteenAdapter(list);
+                adapter = new AdapterCanteen(list);
                 recyclerView.setAdapter(adapter);
             }
         });

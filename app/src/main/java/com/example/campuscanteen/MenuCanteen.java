@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -27,7 +24,7 @@ public class MenuCanteen extends AppCompatActivity {
     private static final String TAG = "TAG";
     private RecyclerView recyclerView;
     private AdapterMenuCustomer adapter;
-    private CanteenAdapter canteenAdapter;
+    private AdapterCanteen adapterCanteen;
     private TextView headerName;
 
 

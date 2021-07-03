@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (firebaseAuth.getCurrentUser() != null){
             login();
-//            startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
-//            finish();
         }
 
 
@@ -67,8 +65,14 @@ public class MainActivity extends AppCompatActivity {
                 firebaseAuth.signInWithEmailAndPassword(loginEmail.getText().toString(), loginPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        login();
-
+                        progressDialog();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                login();
+                                finish();
+                            }
+                        },2000);
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -104,26 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (level){
                         case "customer":
-                            progressDialog();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startActivity(new Intent(getApplicationContext(), dashboard.class));
-                                    finish();
-                                }
-                            },3000);
+                            startActivity(new Intent(getApplicationContext(), dashboard.class));
+                            finish();
 
                             break;
 
                         case "seller":
-                            progressDialog();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
-                                    finish();
-                                }
-                            },2000);
+                            startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
+                            finish();
 
                             break;
 

@@ -162,8 +162,12 @@ public class profile extends AppCompatActivity {
         progressDialog.show();
 
         if (imageUri != null){
+
             final DocumentReference reference = fstore.collection("users").document(userId);
             final StorageReference fileRef = storageReference.child(userId+".jpg");
+
+            uploadTask = fileRef.putFile(imageUri);
+
             fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -173,18 +177,43 @@ public class profile extends AppCompatActivity {
 
                             Picasso.get().load(uri).into(profileImage);
 
-                            myUri = fileRef.getDownloadUrl().toString();
-
-                            HashMap<String, Object> userMap = new HashMap<>();
-                            userMap.put("imageUrl",myUri);
-
-                            reference.update(userMap);
-                            progressDialog.dismiss();
                             Toast.makeText(profile.this, "profile image changed ", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             });
+
+            uploadTask = fileRef.putFile(imageUri);
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return fileRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        myUri = downloadUri.toString();
+                        HashMap<String, Object> userMap = new HashMap<>();
+                        userMap.put("imageUrl",myUri);
+
+                        reference.update(userMap);
+                        progressDialog.dismiss();
+
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
+
         }
 
     }

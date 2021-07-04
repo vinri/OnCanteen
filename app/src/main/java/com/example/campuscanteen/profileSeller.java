@@ -1,5 +1,6 @@
 package com.example.campuscanteen;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,9 +30,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.util.HashMap;
 
 public class profileSeller extends AppCompatActivity {
     private TextView username,email,phone,canteenName;
@@ -36,13 +43,14 @@ public class profileSeller extends AppCompatActivity {
     private FloatingActionButton editImageBtn,editCanteenBtn;
     private Button logout;
 //    private CircleImageView circleImageView,circleCanteenImage;
-    private String userId, myUri="";
+    private String userId, myUri="", canteenUri="";
     private Uri imageUri;
     private boolean statusCode;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore fstore;
     private StorageReference storageReference, canteenStorageRef;
+    private StorageTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +166,7 @@ public class profileSeller extends AppCompatActivity {
         progressDialog.show();
 
         if (imageUri != null) {
+            final DocumentReference reference = fstore.collection("users").document(userId);
             final StorageReference fileRef = storageReference.child(userId + ".jpg");
             fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -167,11 +176,43 @@ public class profileSeller extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             Picasso.get().load(uri).into(profileImage);
                             Toast.makeText(profileSeller.this, "profile image changed ", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
                         }
                     });
                 }
             });
+
+
+            uploadTask = fileRef.putFile(imageUri);
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return fileRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        myUri = downloadUri.toString();
+                        HashMap<String, Object> userMap = new HashMap<>();
+                        userMap.put("imageUrl",myUri);
+
+                        reference.update(userMap);
+                        progressDialog.dismiss();
+
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
+
         }
     }
 
@@ -182,20 +223,53 @@ public class profileSeller extends AppCompatActivity {
         progressDialog.show();
 
         if (imageUri != null) {
-            final StorageReference fileRef = canteenStorageRef.child(userId + ".jpg");
-            fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            final DocumentReference canteenRef = fstore.collection("canteen").document(userId);
+            final StorageReference canteenImgRef = canteenStorageRef.child(userId + ".jpg");
+            canteenImgRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    canteenImgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            Picasso.get().load(uri).into(profileImage);
+                            Picasso.get().load(uri).into(canteenImage);
                             Toast.makeText(profileSeller.this, "Canteen image changed ", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
                         }
                     });
                 }
             });
+
+            uploadTask = canteenImgRef.putFile(imageUri);
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return canteenImgRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        canteenUri = downloadUri.toString();
+
+                        HashMap<String, Object> canteenMap = new HashMap<>();
+                        canteenMap.put("canteenImgUrl",canteenUri);
+
+                        canteenRef.update(canteenMap);
+                        progressDialog.dismiss();
+
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
+
         }
 
     }

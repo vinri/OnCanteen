@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -32,6 +33,7 @@ public class regSeller extends AppCompatActivity {
     public static final String TAG = "TAG";
     EditText fullname,phonenum,emailaddress,userpassword,passwordConfirm,canteenNM;
     public String userId,canteenId,imageUrl=null,canteenImgUrl=null, level ="seller";
+    private Uri uri;
 
     TextView login;
 
@@ -53,6 +55,7 @@ public class regSeller extends AppCompatActivity {
         userpassword = findViewById(R.id.password);
         passwordConfirm = findViewById(R.id.cnfrmPassword);
         canteenNM = findViewById(R.id.canteenName);
+        uri = Uri.parse("drawable/ic_grouplogo.xml");
 
         register_button = findViewById(R.id.registerButton);
         login = findViewById(R.id.backToLogin);

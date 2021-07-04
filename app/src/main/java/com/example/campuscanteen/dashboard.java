@@ -100,7 +100,11 @@ public class dashboard extends AppCompatActivity {
                 List<ModelCanteen> list = new ArrayList<>();
                 if(value != null) {
                     for(QueryDocumentSnapshot item : value) {
-                        list.add(new ModelCanteen(item.getString("CanteenId"), item.getString("CanteenName")));
+                        list.add(new ModelCanteen(
+                                item.getString("canteenId"),
+                                item.getString("CanteenName"),
+                                item.getString("canteenImgUrl")
+                        ));
                     }
                 }
 

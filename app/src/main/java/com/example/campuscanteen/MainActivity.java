@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case "seller":
+
                             startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
                             finish();
 

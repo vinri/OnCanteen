@@ -4,14 +4,15 @@ import java.io.Serializable;
 
 public class ModelCanteen implements Serializable {
 
-    private String CanteenId = "", CanteenName = "";
+    private String CanteenId = "", CanteenName = "",CanteenImgUrl="";
 
     public ModelCanteen() {
     }
 
-    public ModelCanteen(String canteenId, String canteenName) {
+    public ModelCanteen(String canteenId, String canteenName, String canteenImgUrl) {
         CanteenId = canteenId;
         CanteenName = canteenName;
+        CanteenImgUrl = canteenImgUrl;
     }
 
     public String getCanteenId() {
@@ -28,5 +29,13 @@ public class ModelCanteen implements Serializable {
 
     public void setCanteenName(String canteenName) {
         CanteenName = canteenName;
+    }
+
+    public String getCanteenImgUrl() {
+        return CanteenImgUrl;
+    }
+
+    public void setCanteenImgUrl(String canteenImgUrl) {
+        CanteenImgUrl = canteenImgUrl;
     }
 }

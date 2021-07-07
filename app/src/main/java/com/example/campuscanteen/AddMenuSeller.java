@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,8 +38,7 @@ public class AddMenuSeller extends AppCompatActivity {
 
         foodName = findViewById(R.id.FoodName);
         priceTag = findViewById(R.id.price);
-
-        addButton = findViewById(R.id.AddMenuButton);
+        addButton = findViewById(R.id.skip);
 
         fstore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -58,8 +56,8 @@ public class AddMenuSeller extends AppCompatActivity {
     private void addItem() {
         String name = foodName.getText().toString().trim();
         String price = priceTag.getText().toString().trim();
-//        String quantity = qty.getText().toString().trim();
-        menuId = "menu-"+getRandomString(4);
+        Log.d(TAG, "#####onCreate: " + price);
+        menuId = "menu"+getRandomString(4);
 
         if (name.isEmpty()){
             foodName.setError("Required");
@@ -68,11 +66,12 @@ public class AddMenuSeller extends AppCompatActivity {
 
         userId = firebaseAuth.getCurrentUser().getUid();
         DocumentReference reference = fstore.collection("canteen").document(userId)
-                .collection("menu").document(name);
+                .collection("menu").document(menuId);
         Map<String, Object> menu = new HashMap<>();
         menu.put("menuId", menuId);
         menu.put("FoodName", name);
         menu.put("price", price);
+        menu.put("menuUrl", null);
 //        menu.put("qty", quantity);
 
         reference.set(menu).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -82,7 +81,10 @@ public class AddMenuSeller extends AppCompatActivity {
             }
         });
         Toast.makeText(AddMenuSeller.this, "Menu successfully Added", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
+//        startActivity(new Intent(getApplicationContext(), addMenuImage.class));
+        Intent intent = new Intent(getApplicationContext(), addMenuImage.class);
+        intent.putExtra("menuId", menuId);
+        startActivity(intent);
 
     }
     public static String getRandomString(int i){

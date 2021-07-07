@@ -35,10 +35,8 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), profileSeller.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("key", menu);
-                intent.putExtras(bundle);
+                Intent intent = new Intent(v.getContext(), editMenu.class);
+                intent.putExtra("menuId", menu.getMenuId());
                 v.getContext().startActivity(intent);
             }
         });

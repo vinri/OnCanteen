@@ -114,8 +114,10 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case "seller":
+//                            FirebaseAuth.getInstance().signOut();
+//                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                            startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
+                            startActivity(new Intent(getApplicationContext(), profileSeller.class));
                             finish();
 
                             break;

@@ -50,6 +50,7 @@ public class AdapterCanteen extends RecyclerView.Adapter<AdapterCanteen.ViewHold
                 Intent intent = new Intent(v.getContext(), MenuCanteen.class);
                 intent.putExtra("canteenId",itemList.getCanteenId());
                 intent.putExtra("CanteenName",itemList.getCanteenName());
+                intent.putExtra("canteenImgUrl",itemList.getCanteenImgUrl());
                 v.getContext().startActivity(intent);
             }
         });

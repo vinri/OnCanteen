@@ -26,7 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class regSeller extends AppCompatActivity {
 
@@ -62,6 +61,7 @@ public class regSeller extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
+
 
 
         register_button.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +141,6 @@ public class regSeller extends AppCompatActivity {
         String pw = userpassword.getText().toString().trim();
         String confirmPw = passwordConfirm.getText().toString().trim();
         String canteenName = canteenNM.getText().toString().trim();
-        canteenId = getRandomString(6);
 
 
         if (fullNM.isEmpty()){
@@ -176,10 +175,11 @@ public class regSeller extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        userId = firebaseAuth.getCurrentUser().getUid();
                         if (task.isSuccessful()){
 
-                            userId = firebaseAuth.getCurrentUser().getUid();
                             DocumentReference reference = fstore.collection("users").document(userId);
+                            canteenId = userId;
                             Map<String,Object> user = new HashMap<>();
                             user.put("fName",fullNM);
                             user.put("phone",phoneNumber);
@@ -210,7 +210,7 @@ public class regSeller extends AppCompatActivity {
 
                         }
                         Toast.makeText(regSeller.this, "Acoount successfully registered", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), dashboardSeller.class));
+                        startActivity(new Intent(getApplicationContext(), profileSeller.class));
                     }
                 });
 
@@ -218,18 +218,7 @@ public class regSeller extends AppCompatActivity {
     }
 
     
-    public static String getRandomString(int i){
 
-        String character = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder result = new StringBuilder();
-        while (i > 0){
-            Random random = new Random();
-            result.append(character.charAt(random.nextInt(character.length())));
-            i--;
-        }
-        return result.toString();
-
-    }
 
 
 

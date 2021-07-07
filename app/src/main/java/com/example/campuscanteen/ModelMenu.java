@@ -4,16 +4,17 @@ import java.io.Serializable;
 
 public class ModelMenu implements Serializable {
 
-    private String foodName ="", menuId ="",price="";
+    private String foodName ="", menuId ="",price="",menuUrl="";
 
     public ModelMenu(){
 
     }
 
-    public ModelMenu(String foodName, String menuId, String price) {
+    public ModelMenu(String foodName, String menuId, String price, String menuUrl) {
         this.foodName = foodName;
         this.menuId = menuId;
         this.price = price;
+        this.menuUrl = menuUrl;
     }
 
     public String getFoodName() {
@@ -38,5 +39,13 @@ public class ModelMenu implements Serializable {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getMenuUrl() {
+        return menuUrl;
+    }
+
+    public void setMenuUrl(String menuUrl) {
+        this.menuUrl = menuUrl;
     }
 }

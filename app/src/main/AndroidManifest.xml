@@ -9,7 +9,9 @@
         android:roundIcon="@drawable/ic_grouplogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusCanteen">
-        <activity android:name=".profileSeller"></activity>
+        <activity android:name=".addMenuImage"></activity>
+        <activity android:name=".editMenu" />
+        <activity android:name=".profileSeller" />
         <activity android:name=".splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +22,7 @@
         <activity android:name=".AddMenuSeller" />
         <activity android:name=".MenuCanteen" />
         <activity android:name=".profile" />
-        <activity android:name=".dashboardSeller" />
+        <activity android:name=".manageMenu" />
         <activity android:name=".regSeller" />
         <activity android:name=".registerAs" />
         <activity android:name=".dashboard" />
@@ -36,9 +38,9 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

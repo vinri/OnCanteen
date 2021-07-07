@@ -25,7 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class dashboardSeller extends AppCompatActivity {
+public class manageMenu extends AppCompatActivity {
     private FloatingActionButton addButton;
     private RecyclerView recyclerView;
     private AdapterMenu adapterMenu;
@@ -63,7 +63,12 @@ public class dashboardSeller extends AppCompatActivity {
                 List<ModelMenu> list = new ArrayList<>();
                 if (value!=null){
                     for (QueryDocumentSnapshot item : value){
-                        list.add(new ModelMenu(item.getString("FoodName"),item.getString("menuId"),item.getString("price")));
+                        list.add(new ModelMenu(
+                                item.getString("FoodName")
+                                ,item.getString("menuId")
+                                ,item.getString("price")
+                                ,item.getString("menuUrl")
+                        ));
                     }
                 }
                 adapterMenu = new AdapterMenu(list);

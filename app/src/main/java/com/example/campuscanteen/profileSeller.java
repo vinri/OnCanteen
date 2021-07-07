@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -40,8 +39,8 @@ import java.util.HashMap;
 public class profileSeller extends AppCompatActivity {
     private TextView username,email,phone,canteenName;
     private ImageView profileImage, canteenImage;
-    private FloatingActionButton editImageBtn,editCanteenBtn;
-    private Button logout;
+    private FloatingActionButton editImageBtn,editCanteenBtn ;
+    private Button logout,manageMenuBtn;
 //    private CircleImageView circleImageView,circleCanteenImage;
     private String userId, myUri="", canteenUri="";
     private Uri imageUri;
@@ -65,8 +64,9 @@ public class profileSeller extends AppCompatActivity {
         profileImage = findViewById(R.id.circleImageView);
         canteenImage = findViewById(R.id.circleCanteenImageView);
 
-        editImageBtn = findViewById(R.id.changeImage);
+        editImageBtn = findViewById(R.id.changeImageBtn);
         editCanteenBtn = findViewById(R.id.changeCanteenImage);
+        manageMenuBtn = findViewById(R.id.manageMenu);
         logout = findViewById(R.id.logout);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -123,6 +123,13 @@ public class profileSeller extends AppCompatActivity {
             public void onClick(View v) {
                 statusCode = false;
                 CropImage.activity().setAspectRatio(1,1).start(profileSeller.this);
+            }
+        });
+
+        manageMenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), manageMenu.class));
             }
         });
 

@@ -6,23 +6,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,7 +41,7 @@ import java.util.HashMap;
 public class profile extends AppCompatActivity {
     private TextView username,fullname,email,phone;
     private ImageView profileImage;
-    private Button logout;
+    private Button logout, manageMenuBtn;
     private FloatingActionButton editImageBtn;
     private CircleImageView circleImageView;
     private String userId, myUri="";
@@ -68,9 +64,9 @@ public class profile extends AppCompatActivity {
         email = findViewById(R.id.profileEmail);
         phone = findViewById(R.id.profilePhone);
         logout = findViewById(R.id.logout);
-        profileImage = findViewById(R.id.profilePic);
+        profileImage = findViewById(R.id.menuImage);
         navigationBar = findViewById(R.id.navBar);
-        editImageBtn = findViewById(R.id.changeImage);
+        editImageBtn = findViewById(R.id.changeImageBtn);
 
         firebaseAuth= FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
@@ -95,14 +91,17 @@ public class profile extends AppCompatActivity {
                     case R.id.homeSelected:
                         navigationBar.setItemSelected(R.id.homeSelected,true);
                         startActivity(new Intent(getApplicationContext(), profile.class));
+                        finish();
                         break;
                     case R.id.CanteenSelected:
                         navigationBar.setItemSelected(R.id.CanteenSelected,true);
                         startActivity(new Intent(getApplicationContext(), dashboard.class));
+                        finish();
                         break;
                     case R.id.aboutSelected:
                         navigationBar.setItemSelected(R.id.aboutSelected,true);
                         startActivity(new Intent(getApplicationContext(), profile.class));
+                        finish();
                         break;
 
                 }

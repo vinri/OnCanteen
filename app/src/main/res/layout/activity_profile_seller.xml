@@ -11,7 +11,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
@@ -117,7 +117,7 @@
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="8dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/circleCanteenImageView"
@@ -146,6 +146,13 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal" />
     </LinearLayout>
 
     <TextView
@@ -176,21 +183,34 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logout"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="logout"
+        android:textColor="@color/delete_color"
+        app:cornerRadius="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/manageMenu"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/white"
-        android:text="logout"
+        android:text="Manage Menu"
         android:textColor="@color/colorAccent"
         app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:strokeColor="@color/colorAccent"
-        app:strokeWidth="2dp" />
+        app:strokeColor="@color/colorAccent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/changeImage"
+        android:id="@+id/changeImageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_edit"

@@ -44,17 +44,21 @@ public class MenuCanteen extends AppCompatActivity {
         Intent data = getIntent();
         String name = data.getStringExtra("CanteenName");
         String id = data.getStringExtra("canteenId");
-        Log.d(TAG, "onCreate: "+name+"  "+id);
         headerName.setText(name);
 
-        db.collection("canteen").whereEqualTo("canteenId","vczx2t")
+        db.collection("canteen").document(id).collection("menu")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         List<ModelMenu> list = new ArrayList<>();
                         if (value!=null){
                             for (QueryDocumentSnapshot item : value){
-                                list.add(new ModelMenu(item.getString("FoodName"),item.getString("menuId"),item.getString("price")));
+                                list.add(new ModelMenu(
+                                        item.getString("FoodName")
+                                        ,item.getString("menuId")
+                                        ,item.getString("price")
+                                        ,item.getString("menuUrl")
+                                ));
                             }
                         }
                         adapter = new AdapterMenuCustomer(list);

@@ -39,7 +39,7 @@ import java.util.HashMap;
 public class profileSeller extends AppCompatActivity {
     private TextView username,email,phone,canteenName;
     private ImageView profileImage, canteenImage;
-    private FloatingActionButton editImageBtn,editCanteenBtn ;
+    private FloatingActionButton editImageBtn,editCanteenBtn;
     private Button logout,manageMenuBtn;
 //    private CircleImageView circleImageView,circleCanteenImage;
     private String userId, myUri="", canteenUri="";

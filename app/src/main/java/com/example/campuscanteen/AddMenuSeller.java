@@ -85,6 +85,7 @@ public class AddMenuSeller extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), addMenuImage.class);
         intent.putExtra("menuId", menuId);
         startActivity(intent);
+        finish();
 
     }
     public static String getRandomString(int i){

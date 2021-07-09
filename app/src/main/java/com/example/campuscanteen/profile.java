@@ -41,7 +41,7 @@ import java.util.HashMap;
 public class profile extends AppCompatActivity {
     private TextView username,fullname,email,phone;
     private ImageView profileImage;
-    private Button logout, manageMenuBtn;
+    private Button logout, manageMenuBtn, editUserbtn;
     private FloatingActionButton editImageBtn;
     private CircleImageView circleImageView;
     private String userId, myUri="";
@@ -67,6 +67,7 @@ public class profile extends AppCompatActivity {
         profileImage = findViewById(R.id.menuImage);
         navigationBar = findViewById(R.id.navBar);
         editImageBtn = findViewById(R.id.changeImageBtn);
+        editUserbtn = findViewById(R.id.editUserBtn);
 
         firebaseAuth= FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
@@ -117,7 +118,13 @@ public class profile extends AppCompatActivity {
                 email.setText(value.getString("email"));
                 phone.setText(value.getString("phone"));
             }
-
+        });
+        editUserbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editUser = new Intent(getApplicationContext(), editUser.class);
+                startActivity(editUser);
+            }
         });
 
         editImageBtn.setOnClickListener(new View.OnClickListener() {

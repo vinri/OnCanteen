@@ -12,8 +12,7 @@
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/colorAccent"
+        android:background="@drawable/gradient_blue_bg"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +58,6 @@
                 android:id="@+id/dash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="Hello, "
                 android:textColor="@color/grey"
                 android:textSize="24sp" />

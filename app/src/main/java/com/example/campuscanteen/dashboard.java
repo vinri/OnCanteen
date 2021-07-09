@@ -37,7 +37,7 @@ public class dashboard extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private AdapterCanteen adapter;
 
-    Button button;
+//    Button button;
     ChipNavigationBar navigationBar;
 
     @Override
@@ -53,7 +53,7 @@ public class dashboard extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         navigationBar = findViewById(R.id.navBar);
-        button = findViewById(R.id.toProfile);
+//        button = findViewById(R.id.toProfile);
         userName = findViewById(R.id.tvUsername);
         user = firebaseAuth.getCurrentUser().getUid();
 

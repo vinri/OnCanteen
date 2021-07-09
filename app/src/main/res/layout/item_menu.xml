@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     android:layout_marginBottom="8dp"
-    >
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,24 +19,26 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_baseline_image_24"
-            android:id="@+id/canteenImgView"
+            android:id="@+id/menuImgView"
+            android:layout_gravity="center_vertical"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
             android:gravity="center_vertical"
-            android:layout_marginLeft="16dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvMenuSeller"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Canteen Name"
                 android:textColor="@color/colorAccent"
-                android:textSize="24dp"
                 android:textStyle="bold" />
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,22 +47,39 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:text="IDR"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginRight="8dp"/>
+                    android:textColor="@color/colorAccent" />
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0"
                     android:id="@+id/tvPrice"
-                    android:textColor="@color/colorAccent"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00000"
+                    android:textColor="@color/colorAccent" />
 
 
             </LinearLayout>
 
+
+
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:id="@+id/numberPick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:initialNumber="0"
+                app:finalNumber="50"
+                app:backGroundColor="@color/background_light"
+                app:textColor="@color/colorAccent"
+                android:layout_gravity="left|bottom"
+                />
         </LinearLayout>
 
     </LinearLayout>
+
+
+
+
 
 
 </androidx.cardview.widget.CardView>

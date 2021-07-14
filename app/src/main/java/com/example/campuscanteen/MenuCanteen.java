@@ -2,8 +2,12 @@ package com.example.campuscanteen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.firebase.firestore.EventListener;
@@ -26,7 +30,8 @@ public class MenuCanteen extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterMenuCustomer adapter;
     private AdapterCanteen adapterCanteen;
-    private TextView headerName;
+    private TextView headerName, totalBayar;
+    private Button placeOrderButton;
 
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -41,6 +46,9 @@ public class MenuCanteen extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         headerName = findViewById(R.id.dash);
+        totalBayar = findViewById(R.id.totalTV);
+        placeOrderButton = findViewById(R.id.placeOrderBtn);
+
 
         Intent data = getIntent();
         String name = data.getStringExtra("CanteenName");
@@ -66,5 +74,23 @@ public class MenuCanteen extends AppCompatActivity {
                         recyclerView.setAdapter(adapter);
                     }
                 });
+        placeOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "TOTAL BAYAR: "+Integer.toString(TotalBayar.getTotalBayar()));
+                if (TotalBayar.getTotalBayar() == 0){
+                    Toast.makeText(MenuCanteen.this, "add your order please", Toast.LENGTH_SHORT).show();
+                }else if(TotalBayar.getTotalBayar() > 0){
+                    startActivity(new Intent(getApplicationContext(), ConfirmPayment.class));
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        TotalBayar.setTotalBayar(0);
     }
 }

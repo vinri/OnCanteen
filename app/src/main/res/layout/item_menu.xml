@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
 
@@ -62,18 +62,18 @@
             </LinearLayout>
 
 
-
             <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                android:id="@+id/numberPick"
+                android:id="@+id/elegantNumberButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                app:backGroundColor="@color/colorAccent"
                 app:initialNumber="0"
-                app:finalNumber="50"
-                app:backGroundColor="@color/background_light"
-                app:textColor="@color/colorAccent"
-                android:layout_gravity="left|bottom"
-                />
+                app:textColor="@color/white" />
+
         </LinearLayout>
+
 
     </LinearLayout>
 

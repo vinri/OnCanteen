@@ -30,7 +30,8 @@ public class AdapterMenuCustomer extends RecyclerView.Adapter<AdapterMenuCustome
     @NonNull
     @Override
     public AdapterMenuCustomer.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AdapterMenuCustomer.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu, parent,false));
+        return new AdapterMenuCustomer.ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_menu, parent,false));
     }
 
     @Override

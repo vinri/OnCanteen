@@ -16,20 +16,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.campuscanteen.Register.TAG;
 
 public class ProceedOrderSeller extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -71,6 +78,24 @@ public class ProceedOrderSeller extends AppCompatActivity implements NavigationV
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.textView8);
+        TextView navEmail = headerView.findViewById(R.id.textView11);
+        ImageView img = headerView.findViewById(R.id.navCircleImageView);
+
+        DocumentReference headerRef = db.collection("users")
+                .document(userId);
+        headerRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                navUsername.setText(value.getString("fName"));
+                navEmail.setText(value.getString("email"));
+                Picasso.get().load(value.getString("imageUrl")).into(img);
+
+                Log.d(TAG, "onCreate: Image :"+ value.getString("imageUrl"));
+            }
+        });
+
 
 
         db.collection("transaction")
@@ -78,7 +103,6 @@ public class ProceedOrderSeller extends AppCompatActivity implements NavigationV
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
                 snapshot();
 
             }
@@ -86,7 +110,7 @@ public class ProceedOrderSeller extends AppCompatActivity implements NavigationV
     }
 
     private void snapshot() {
-        db.collection("transaction").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("transaction").whereEqualTo("canteenId", userId).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 List<ModelTransaction> list = new ArrayList<>();

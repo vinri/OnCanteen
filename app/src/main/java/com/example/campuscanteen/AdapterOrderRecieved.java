@@ -36,11 +36,10 @@ public class AdapterOrderRecieved extends RecyclerView.Adapter<AdapterOrderRecie
 
     @Override
     public void onBindViewHolder(@NonNull AdapterOrderRecieved.ViewHolder holder, int position) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseFirestore fstore = FirebaseFirestore.getInstance();
         ModelTransaction modelTransaction = list.get(position);
-        holder.transId.setText(modelTransaction.getUserId());
-        holder.total.setText(modelTransaction.getTotalBayar());
+        holder.transId.setText(list.get(position).getTransactionId());
+        holder.total.setText(list.get(position).getTotalBayar());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,21 +13,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.campuscanteen.Register.TAG;
 
 public class SellerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -35,6 +43,7 @@ public class SellerMainActivity extends AppCompatActivity implements NavigationV
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private String userId;
+    private TextView noOrder;
 
     private TextView userName;
     private RecyclerView recyclerView;
@@ -44,6 +53,8 @@ public class SellerMainActivity extends AppCompatActivity implements NavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_main);
+
+        noOrder = findViewById(R.id.noOrder);
 
         //Navigation Drawer
         Toolbar toolbar = findViewById(R.id.toolbarMenu);
@@ -71,8 +82,26 @@ public class SellerMainActivity extends AppCompatActivity implements NavigationV
         userId = firebaseAuth.getCurrentUser().getUid();
 
 
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.textView8);
+        TextView navEmail = headerView.findViewById(R.id.textView11);
+        ImageView img = headerView.findViewById(R.id.navCircleImageView);
+
+        DocumentReference headerRef = db.collection("users")
+                .document(userId);
+        headerRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                navUsername.setText(value.getString("fName"));
+                navEmail.setText(value.getString("email"));
+                Picasso.get().load(value.getString("imageUrl")).into(img);
+
+                Log.d(TAG, "onCreate: Image :"+ value.getString("imageUrl"));
+            }
+        });
+
+
         db.collection("transaction")
-                .whereNotEqualTo("status", "proceed")
                 .whereEqualTo("canteenId", userId)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

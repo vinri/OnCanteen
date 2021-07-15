@@ -28,9 +28,9 @@ public class AdapterAllOrder extends RecyclerView.Adapter<AdapterAllOrder.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AdapterAllOrder.ViewHolder holder, int position) {
         ModelTransaction modelTransaction = list.get(position);
-        holder.transId.setText(modelTransaction.getUserId());
-        holder.total.setText(modelTransaction.getTotalBayar());
-        holder.status.setText(modelTransaction.getStatus());
+        holder.transId.setText(list.get(position).getTransactionId());
+        holder.total.setText(list.get(position).getTotalBayar());
+        holder.status.setText(list.get(position).getStatus());
 
     }
 

@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,9 +29,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.campuscanteen.Register.TAG;
 
 public class manageMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FloatingActionButton addButton;
@@ -71,6 +76,24 @@ public class manageMenu extends AppCompatActivity implements NavigationView.OnNa
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         curentUser = firebaseAuth.getCurrentUser().getUid();
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.textView8);
+        TextView navEmail = headerView.findViewById(R.id.textView11);
+        ImageView img = headerView.findViewById(R.id.navCircleImageView);
+
+        DocumentReference headerRef = db.collection("users")
+                .document(curentUser);
+        headerRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                navUsername.setText(value.getString("fName"));
+                navEmail.setText(value.getString("email"));
+                Picasso.get().load(value.getString("imageUrl")).into(img);
+
+                Log.d(TAG, "onCreate: Image :"+ value.getString("imageUrl"));
+            }
+        });
+
 
         db.collection("canteen").document(curentUser).collection("menu")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

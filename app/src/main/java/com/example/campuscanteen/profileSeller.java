@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,8 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
+
+import static com.example.campuscanteen.Register.TAG;
 
 public class profileSeller extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView username,email,phone,canteenName;
@@ -99,6 +102,24 @@ public class profileSeller extends AppCompatActivity implements NavigationView.O
         if (savedInstanceState==null){
             navigationView.setCheckedItem(R.id.navUserProfile);
         }
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.textView8);
+        TextView navEmail = headerView.findViewById(R.id.textView11);
+        ImageView img = headerView.findViewById(R.id.navCircleImageView);
+
+        DocumentReference headerRef = fstore.collection("users")
+                .document(userId);
+        headerRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                navUsername.setText(value.getString("fName"));
+                navEmail.setText(value.getString("email"));
+                Picasso.get().load(value.getString("imageUrl")).into(img);
+
+                Log.d(TAG, "onCreate: Image :"+ value.getString("imageUrl"));
+            }
+        });
 
         profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

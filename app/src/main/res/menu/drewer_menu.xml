@@ -9,7 +9,7 @@
         <item android:id="@+id/navHome"
             android:icon="@drawable/ic_baseline_home_24"
             android:iconTint="@color/grey"
-            android:title="Manage Menu"
+            android:title="Home"
             />
 
         <item android:id="@+id/navManageMenu"

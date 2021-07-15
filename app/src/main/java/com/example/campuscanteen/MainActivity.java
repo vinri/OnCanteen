@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 //                            FirebaseAuth.getInstance().signOut();
 //                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                            startActivity(new Intent(getApplicationContext(), profileSeller.class));
+                            startActivity(new Intent(getApplicationContext(), SellerMainActivity.class));
                             finish();
 
                             break;

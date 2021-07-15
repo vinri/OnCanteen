@@ -46,35 +46,13 @@ public class AdapterMenuCustomer extends RecyclerView.Adapter<AdapterMenuCustome
                 Log.d(TAG, String.format("oldValue: %d   newValue: %d", oldValue, newValue));
                 if (oldValue < newValue){
                     TotalBayar.setTotalBayar(TotalBayar.getTotalBayar()+price);
-
+                    FoodMenuModel.setFoodMenuModel(menu.getMenuId());
                 }else {
                     TotalBayar.setTotalBayar(TotalBayar.getTotalBayar()-price);
-
                 }
                 Log.d(TAG, "onValueChange: "+ TotalBayar.getTotalBayar());
             }
         });
-
-//        holder.elegantNumberButton.setOnClickListener(new ElegantNumberButton.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String num = holder.elegantNumberButton.getNumber();
-//                Log.d(TAG, "onClick: "+num);
-//                To
-//            }
-//        });
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), addToCart.class);
-//                intent.putExtra("menuName", menu.getFoodName());
-//                intent.putExtra("price", menu.getPrice());
-//                intent.putExtra("menuUrl", menu.getMenuUrl());
-//                intent.putExtra("menuId", menu.getMenuId());
-//                v.getContext().startActivity(intent);
-//            }
-//        });
 
     }
 

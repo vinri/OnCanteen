@@ -30,7 +30,7 @@ public class MenuCanteen extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterMenuCustomer adapter;
     private AdapterCanteen adapterCanteen;
-    private TextView headerName, totalBayar;
+    private TextView headerName;
     private Button placeOrderButton;
 
 
@@ -46,9 +46,7 @@ public class MenuCanteen extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         headerName = findViewById(R.id.dash);
-        totalBayar = findViewById(R.id.totalTV);
         placeOrderButton = findViewById(R.id.placeOrderBtn);
-
 
         Intent data = getIntent();
         String name = data.getStringExtra("CanteenName");
@@ -81,7 +79,11 @@ public class MenuCanteen extends AppCompatActivity {
                 if (TotalBayar.getTotalBayar() == 0){
                     Toast.makeText(MenuCanteen.this, "add your order please", Toast.LENGTH_SHORT).show();
                 }else if(TotalBayar.getTotalBayar() > 0){
-                    startActivity(new Intent(getApplicationContext(), ConfirmPayment.class));
+//                    startActivity(new Intent(getApplicationContext(), ConfirmPayment.class));
+                    Intent intentPayment = new Intent(getApplicationContext(), ConfirmPayment.class);
+                    intentPayment.putExtra("canteenId", id);
+                    Log.d(TAG, "onClick: "+FoodMenuModel.getFoodMenuModel());
+                    startActivity(intentPayment);
                 }
             }
         });

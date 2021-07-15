@@ -2,14 +2,18 @@ package com.example.campuscanteen;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,12 +25,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -36,15 +42,16 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
 
-public class profileSeller extends AppCompatActivity {
+public class profileSeller extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView username,email,phone,canteenName;
     private ImageView profileImage, canteenImage;
     private FloatingActionButton editImageBtn,editCanteenBtn;
-    private Button logout,manageMenuBtn;
-//    private CircleImageView circleImageView,circleCanteenImage;
+    private Button manageMenuBtn;
     private String userId, myUri="", canteenUri="";
     private Uri imageUri;
     private boolean statusCode;
+
+    private DrawerLayout drawerLayout;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore fstore;
@@ -67,7 +74,6 @@ public class profileSeller extends AppCompatActivity {
         editImageBtn = findViewById(R.id.changeImageBtn);
         editCanteenBtn = findViewById(R.id.changeCanteenImage);
         manageMenuBtn = findViewById(R.id.manageMenu);
-        logout = findViewById(R.id.logout);
 
         firebaseAuth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
@@ -76,6 +82,23 @@ public class profileSeller extends AppCompatActivity {
         canteenStorageRef = FirebaseStorage.getInstance().getReference().child("canteen/canteenImage");
         StorageReference profileImageRef = storageReference.child(userId + ".jpg");
         StorageReference canteenRef = canteenStorageRef.child(userId + ".jpg");
+        //Navigation Drawer
+        Toolbar toolbar = findViewById(R.id.toolbarMenu);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout,toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        if (savedInstanceState==null){
+            navigationView.setCheckedItem(R.id.navUserProfile);
+        }
 
         profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -133,10 +156,17 @@ public class profileSeller extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
+    }
+
+
+
+    private void orderRecieved() {
+
+        fstore.collection("transaction").whereEqualTo("status", "proceed")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onClick(View v) {
-                logout();
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                startActivity(new Intent(getApplicationContext(), ProceedOrderSeller.class));
             }
         });
 
@@ -279,6 +309,34 @@ public class profileSeller extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.navHome:
+                startActivity(new Intent(getApplicationContext(), SellerMainActivity.class));
+                finish();
+                break;
+            case R.id.navManageMenu:
+                startActivity(new Intent(getApplicationContext(), manageMenu.class));
+                finish();
+                break;
+            case R.id.navOrderRecieved:
+                startActivity(new Intent(getApplicationContext(), ProceedOrderSeller.class));
+                finish();
+                break;
+            case R.id.navUserProfile:
+                startActivity(new Intent(getApplicationContext(), profileSeller.class));
+                finish();
+                break;
+            case R.id.navLogout:
+                logout();
+                break;
+        }
+
+        return true;
     }
 
     public void logout(){

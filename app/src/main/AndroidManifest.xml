@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusCanteen"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".ConfirmPayment"></activity>
+        <activity android:name=".SellerMainActivity"></activity>
+        <activity android:name=".ProceedOrderSeller" />
+        <activity android:name=".AboutApp" />
+        <activity android:name=".ConfirmPayment" />
         <activity android:name=".addToCart" />
         <activity android:name=".editUser" />
         <activity android:name=".editDataMenu" />

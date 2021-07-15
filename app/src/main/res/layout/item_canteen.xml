@@ -30,18 +30,12 @@
                 android:id="@+id/tvCanteenItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
                 android:text="Canteen Name"
                 android:textColor="@color/grey"
                 android:textSize="16dp"
                 android:textStyle="bold" />
-            <TextView
-                android:id="@+id/TVmenuItem"
-                android:layout_below="@id/tvCanteenItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="menu, menu, menu"
-                android:textColor="@color/light_grey"
-                android:textSize="16dp"/>
 
         </RelativeLayout>
 

@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class dashboard extends AppCompatActivity {
     private static final String TAG = "CanteenActivity";
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private ImageView imageView;
 
     private String user;
 
@@ -51,6 +55,7 @@ public class dashboard extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
+        imageView = findViewById(R.id.dashboardPhoto);
 
         navigationBar = findViewById(R.id.navBar);
 //        button = findViewById(R.id.toProfile);
@@ -77,7 +82,7 @@ public class dashboard extends AppCompatActivity {
                         break;
                     case R.id.aboutSelected:
                         navigationBar.setItemSelected(R.id.aboutSelected,true);
-                        startActivity(new Intent(getApplicationContext(), profile.class));
+                        startActivity(new Intent(getApplicationContext(), AboutApp.class));
                         finish();
                         break;
 
@@ -90,6 +95,7 @@ public class dashboard extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 userName.setText(value.getString("fName"));
+                Picasso.get().load(value.getString("imageUrl")).into(imageView);
             }
         });
 

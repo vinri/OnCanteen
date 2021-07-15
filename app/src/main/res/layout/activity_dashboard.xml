@@ -8,70 +8,25 @@
     android:background="@color/light_bg"
     tools:context=".dashboard">
 
-    <LinearLayout
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/gradient_blue_bg"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/dashboardPhoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_baseline_person"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginLeft="16dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_group" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="ONCANTEEN"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textSize="24dp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_baseline_shopping_cart_24"
-        app:layout_constraintBottom_toBottomOf="@+id/logo"
-        app:layout_constraintEnd_toEndOf="@+id/logo"
-        app:layout_constraintTop_toTopOf="@+id/logo"
-        app:tint="@color/white" />
-
-    <com.nex3z.notificationbadge.NotificationBadge
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:nbBackground="@drawable/badge"
-        app:nbMaxTextLength="2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/topLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logo"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/canteen_list"
-        app:layout_constraintEnd_toStartOf="@+id/logo"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toBottomOf="@id/logo">
+        app:layout_constraintBottom_toBottomOf="@+id/dashboardPhoto"
+        app:layout_constraintStart_toEndOf="@+id/dashboardPhoto"
+        app:layout_constraintTop_toTopOf="@+id/dashboardPhoto">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="What do you want to order today?"
             android:textColor="@color/light_grey"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

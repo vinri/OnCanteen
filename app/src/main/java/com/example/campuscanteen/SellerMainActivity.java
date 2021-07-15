@@ -14,14 +14,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -31,23 +29,23 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class manageMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private FloatingActionButton addButton;
-    private RecyclerView recyclerView;
-    private AdapterMenu adapterMenu;
-    private String curentUser;
+public class SellerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    private String userId;
+
+    private TextView userName;
+    private RecyclerView recyclerView;
+    private AdapterOrderRecieved adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_menu);
+        setContentView(R.layout.activity_seller_main);
 
-        //nav drawer
+        //Navigation Drawer
         Toolbar toolbar = findViewById(R.id.toolbarMenu);
         setSupportActionBar(toolbar);
 
@@ -60,53 +58,58 @@ public class manageMenu extends AppCompatActivity implements NavigationView.OnNa
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        if (savedInstanceState==null){
 
-            navigationView.setCheckedItem(R.id.navManageMenu);
-        }
+        navigationView.setCheckedItem(R.id.navHome);
 
 
-        addButton = findViewById(R.id.addButton);
-        recyclerView = findViewById(R.id.menuCanteen);
+        //RecyclerView
+        recyclerView = findViewById(R.id.recycleViewOrder);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        curentUser = firebaseAuth.getCurrentUser().getUid();
 
-        db.collection("canteen").document(curentUser).collection("menu")
+        userName = findViewById(R.id.tvUsername);
+        userId = firebaseAuth.getCurrentUser().getUid();
+
+
+        db.collection("transaction")
+                .whereNotEqualTo("status", "proceed")
+                .whereEqualTo("canteenId", userId)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                snapshot();
+
+            }
+        });
+    }
+
+    private void snapshot() {
+        db.collection("transaction")
+                .whereEqualTo("canteenId", userId)
+                .whereEqualTo("status","proceed")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                List<ModelMenu> list = new ArrayList<>();
-                if (value!=null){
-                    for (QueryDocumentSnapshot item : value){
-                        list.add(new ModelMenu(
-                                item.getString("FoodName")
-                                ,item.getString("menuId")
-                                ,item.getString("price")
-                                ,item.getString("menuUrl")
+                List<ModelTransaction> list = new ArrayList<>();
+                if(value != null) {
+                    for(QueryDocumentSnapshot item : value) {
+                        list.add(new ModelTransaction(
+                                item.getString("canteenId"),
+                                item.getString("userId"),
+                                item.getString("total"),
+                                item.getString("transactionId"),
+                                item.getString("status")
                         ));
                     }
                 }
-                adapterMenu = new AdapterMenu(list);
-                recyclerView.setAdapter(adapterMenu);
+
+                adapter = new AdapterOrderRecieved(list);
+                recyclerView.setAdapter(adapter);
             }
         });
-
-
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addMenu();
-            }
-        });
-
     }
 
-    private void addMenu() {
-        startActivity(new Intent(getApplicationContext(), AddMenuSeller.class));
-        finish();
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -114,19 +117,15 @@ public class manageMenu extends AppCompatActivity implements NavigationView.OnNa
 
             case R.id.navHome:
                 startActivity(new Intent(getApplicationContext(), SellerMainActivity.class));
-                finish();
                 break;
             case R.id.navManageMenu:
                 startActivity(new Intent(getApplicationContext(), manageMenu.class));
-                finish();
                 break;
             case R.id.navOrderRecieved:
                 startActivity(new Intent(getApplicationContext(), ProceedOrderSeller.class));
-                finish();
                 break;
             case R.id.navUserProfile:
                 startActivity(new Intent(getApplicationContext(), profileSeller.class));
-                finish();
                 break;
             case R.id.navLogout:
                 logout();

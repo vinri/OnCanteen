@@ -101,7 +101,7 @@ public class profile extends AppCompatActivity {
                         break;
                     case R.id.aboutSelected:
                         navigationBar.setItemSelected(R.id.aboutSelected,true);
-                        startActivity(new Intent(getApplicationContext(), profile.class));
+                        startActivity(new Intent(getApplicationContext(), AboutApp.class));
                         finish();
                         break;
 
